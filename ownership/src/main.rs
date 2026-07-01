@@ -32,7 +32,7 @@ fn main() {
     changex(&mut x);
     println!("{}", x);
 
-    let reference_to_nothing = dangle();
+    // let reference_to_nothing = dangle();
 }
 
 fn takest4(t4 : String) {
@@ -43,17 +43,17 @@ fn changex(x : &mut String) {
     x.push_str(" xxxxxx");
 }
 
-fn str1() -> &str{
-    "a"
-}
+// fn str1() -> &str{
+//     "a"
+// }
 
 fn str2() -> String {
     "b".to_string()
 }
 
-fn dangle() -> &String {
-    let s = String::from("hello");
-
-    &s
-}
+// fn dangle() -> &String {
+//     let s = String::from("hello");
+//
+//     &s
+// }
 

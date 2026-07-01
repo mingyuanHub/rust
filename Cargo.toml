@@ -1,0 +1,21 @@
+[workspace]
+members = [
+    "args", "async-my",
+    "axum-api", "channel",
+    "closures",
+    "crate-my", "drop",
+    "enum-my",
+    "func",
+    "guessgame",
+    "iterators",
+    "lifetime", "mutex",
+    "ownership",
+    "slices", "smart-pointers",
+    "strings-my",
+    "structs", "threads",
+    "trait-my",
+    "variables",
+    "vec-my",
+]
+
+resolver = "2"
