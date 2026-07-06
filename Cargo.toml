@@ -15,7 +15,7 @@ members = [
     "structs", "threads",
     "trait-my",
     "variables",
-    "vec-my",
+    "vec-my", "web",
 ]
 
 resolver = "2"

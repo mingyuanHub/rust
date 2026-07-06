@@ -536,7 +536,58 @@ expensive_computation();  // 锁还被持有
 
 ---
 
-## 11. 与其他语言对比
+## 11. 单线程 vs 多线程服务器
+
+### 11.1 识别方法
+
+**单线程：** `for` 循环串行处理，一次只处理一个连接
+
+```rust
+// 单线程服务器
+for line in listener.incoming() {
+    let stream = line.unwrap();
+    handle_con(stream);  // 阻塞，处理完才继续下一个
+}
+```
+
+执行顺序：
+```
+客户端1 → handle_con() 处理完 →
+客户端2 → handle_con() 处理完 →  等待中...
+客户端3 → handle_con() 处理完 →  等待中...
+```
+
+**多线程：** 每个连接开一个线程
+
+```rust
+// 多线程服务器
+for line in listener.incoming() {
+    let stream = line.unwrap();
+    thread::spawn(move || {
+        handle_con(stream);  // 独立线程，不阻塞主循环
+    });
+}
+```
+
+执行顺序：
+```
+客户端1 → thread1 处理中...
+客户端2 → thread2 处理中...  ← 不用等客户端1
+客户端3 → thread3 处理中...  ← 不用等客户端1/2
+```
+
+### 11.2 判断标准
+
+| 代码特征 | 单线程 | 多线程 |
+|---------|--------|--------|
+| `for` 循环直接调用处理函数 | ✓ | |
+| `thread::spawn` 包裹处理函数 | | ✓ |
+| `tokio::spawn` 或 `async` | | ✓（异步并发） |
+| 同时处理多个连接 | ✗ | ✓ |
+
+---
+
+## 12. 与其他语言对比
 
 | 特性 | Rust | Go | C++ |
 |------|------|-----|-----|
